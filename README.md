@@ -1,0 +1,1 @@
+elsticbean stalk app test
