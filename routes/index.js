@@ -2,8 +2,8 @@ var express = require('express');
 const Sequelize = require("sequelize");
 var router = express.Router();
 
-router.post('/getQuertData', function (req, res, next) {
-
+router.post('/', function (req, res, next) {
+  console.log("came here")
   let dbName = "prosperoware_io_dev"
   let instanceInfo = {
     username: "prospadmin",
@@ -20,13 +20,13 @@ router.post('/getQuertData', function (req, res, next) {
     }
   );
 
-  try {
-    let result = await queryExecutor(`select * from document limit 5`, sequelize);
-    res.send({ data: result })
-  } catch (err) {
-    console.log("error occured", JSON.stringify(err))
-    res.send({ data: err })
-  }
+  queryExecutor(`select * from document limit 5`, sequelize)
+    .then((result) => {
+      res.send({ data: result })
+    })
+    .catch((err) => {
+      res.send({ data: err })
+    })
 });
 
 function queryExecutor(query, sequelize) {
